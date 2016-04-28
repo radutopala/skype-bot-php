@@ -13,6 +13,9 @@
       "in": "vendor"
     }
   ],
+  "replacements": {
+    "tag": "1.0.0"
+  },
   "git-version": "package_version",
   "main": "bin/skype",
   "output": "build/skype.phar",

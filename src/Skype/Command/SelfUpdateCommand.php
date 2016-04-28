@@ -13,8 +13,8 @@ use Humbug\SelfUpdate\Strategy\GithubStrategy;
 class SelfUpdateCommand extends Command
 {
 
-    const VERSION_URL = 'https://@host@/client-php/skype.version';
-    const PHAR_URL = 'https://@host@/client-php/skype.phar';
+    const VERSION_URL = 'https://github.com/radutopala/skype-bot-php/releases/download/@tag@/skype.version';
+    const PHAR_URL = 'https://github.com/radutopala/skype-bot-php/releases/download/@tag@/skype.phar';
 
     /**
      * @var OutputInterface
