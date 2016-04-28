@@ -1,0 +1,5 @@
+.idea
+vendor
+*.phar
+build
+box.json

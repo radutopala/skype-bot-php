@@ -1,0 +1,28 @@
+{
+  "name": "radutopala/skype-bot-php",
+  "description": "Skype Bot CLI & Library Client",
+  "keywords": ["phar", "skype", "skype bot", "bot"],
+  "homepage": "https://www.trisoft.ro",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Radu Topala",
+      "email": "radu.topala@trisoft.ro",
+      "homepage": "https://www.trisoft.ro"
+    }
+  ],
+  "require": {
+    "php": ">=5.4",
+    "symfony/console": "^2.8",
+    "padraic/phar-updater": "^1.0",
+    "guzzlehttp/guzzle": "^6.2",
+    "symfony/yaml": "^2.8",
+    "symfony/filesystem": "^2.8",
+    "phpdocumentor/reflection-docblock": "~2.0",
+    "mattketmo/camel": "~1.1",
+    "rybakit/arguments-resolver": "~0.5.0"
+  },
+  "autoload": {
+    "psr-4": { "Skype\\": "src/Skype" }
+  }
+}

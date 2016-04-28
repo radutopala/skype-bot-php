@@ -1,0 +1,33 @@
+#!/usr/bin/env php
+<?php
+
+$files       = array(__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php');
+$loader      = null;
+foreach ($files as $file) {
+    if (file_exists($file)) {
+        $loader = require $file;
+        break;
+    }
+}
+if (!$loader) {
+    throw new \RuntimeException('vendor/autoload.php could not be found. Did you run `php composer.phar install`?');
+}
+
+use Skype\Console\Application;
+use Skype\Command;
+use Skype\Authentication\FileTokenStorage;
+use Skype\Console\CommandFactory;
+use Camel\CaseTransformer;
+use Camel\Format;
+use Symfony\Component\Console\Input;
+
+$commandFactory = new CommandFactory(
+    new FileTokenStorage(),
+    new CaseTransformer(new Format\CamelCase(), new Format\SnakeCase())
+);
+
+$application = new Application('Skype', '@package_version@');
+$application->add(new Command\AuthCommand());
+$application->add(new Command\SelfUpdateCommand());
+$application->addCommands($commandFactory->generateCommands());
+$application->run();

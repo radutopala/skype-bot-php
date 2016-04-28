@@ -1,0 +1,2 @@
+#!/bin/bash
+openssl sha1 build/skype.phar|sed 's/.* //g' > build/skype.version
