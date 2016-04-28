@@ -59,5 +59,14 @@ php skype.phar conversation:activity <to> <message>
 ##Tips
  - If used as a library, the HTTP Guzzle Client will automatically try to re-authenticate using a Guzzle middleware, if the `access_token` will expire in the following 10 minutes.
  - If used as a phar, you can update it to latest version using `skype.phar self-update`
+ - If used as a library, you can store the token configs in your own preffered file path, as follows:
+ 
+   ```
+   $client = new Client([
+        'clientId' => '<yourClientId>',
+        'clientSecret' => '<yourClientSecret>',
+        'fileTokenStoragePath' => '<yourOwnPath>',
+   ]);
+ ```
 
 More docs to come soon.
