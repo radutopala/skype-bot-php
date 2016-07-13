@@ -147,7 +147,7 @@ class CommandFactory
             if (method_exists($outputClass, $methodName) && false === $input->getOption('debug') && $response->getStatusCode() < 400) {
                 (new $outputClass())->{$methodName}($output, $response);
             } elseif (!method_exists($outputClass, $methodName) || true === $input->getOption('debug')) {
-                $output->writeln(print_r($response->getHeaders(), true) . print_r((string) $response->getBody(), true));
+                $output->writeln("Headers:\n" . print_r($response->getHeaders(), true) . "Body:\n" . print_r((string) $response->getBody(), true));
             }
         };
     }

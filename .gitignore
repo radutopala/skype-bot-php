@@ -3,3 +3,4 @@ vendor
 *.phar
 build
 box.json
+composer.lock
