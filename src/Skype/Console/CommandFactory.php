@@ -5,6 +5,7 @@ namespace Skype\Console;
 use ArgumentsResolver\NamedArgumentsResolver;
 use Camel\CaseTransformerInterface;
 use phpDocumentor\Reflection\DocBlock;
+use phpDocumentor\Reflection\DocBlockFactory;
 use Skype\Api\ApiInterface;
 use Skype\Authentication\TokenStorageInterface;
 use Skype\Client;
@@ -76,10 +77,12 @@ class CommandFactory
         $methodName = $this->transformer->transform($method->getName());
 
         $command = new Command(strtolower($name . ':' . $methodName));
-        $docBlock = new DocBlock($method->getDocComment());
+
+        $factory  = DocBlockFactory::createInstance();
+        $docBlock = $factory->create($method);
 
         $command->setDefinition($this->buildDefinition($method, $docBlock, $token));
-        $command->setDescription($docBlock->getShortDescription());
+        $command->setDescription($docBlock->getSummary());
         $command->setCode($this->createCode($name, $method));
 
         return $command;
@@ -98,8 +101,8 @@ class CommandFactory
         $definition = new InputDefinition();
 
         foreach ($docBlock->getTags() as $tag) {
-            if ($tag instanceof DocBlock\Tag\ParamTag) {
-                $tagsDescription[$tag->getVariableName()] = $tag->getDescription();
+            if ($tag instanceof DocBlock\Tags\Param) {
+                $tagsDescription[$tag->getVariableName()] = $tag->getDescription()->render();
             }
         }
 
@@ -107,10 +110,10 @@ class CommandFactory
 
             if ($parameter->isDefaultValueAvailable()) {
                 //option
-                $definition->addOption(new InputOption($parameter->getName(), null, InputOption::VALUE_REQUIRED, $tagsDescription['$' . $parameter->getName()], $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null));
+                $definition->addOption(new InputOption($parameter->getName(), null, InputOption::VALUE_REQUIRED, $tagsDescription[$parameter->getName()], $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null));
             } else {
                 //argument
-                $definition->addArgument(new InputArgument($parameter->getName(), InputArgument::REQUIRED, $tagsDescription['$' . $parameter->getName()], null));
+                $definition->addArgument(new InputArgument($parameter->getName(), InputArgument::REQUIRED, $tagsDescription[$parameter->getName()], null));
             }
         }
 
@@ -147,7 +150,7 @@ class CommandFactory
             if (method_exists($outputClass, $methodName) && false === $input->getOption('debug') && $response->getStatusCode() < 400) {
                 (new $outputClass())->{$methodName}($output, $response);
             } elseif (!method_exists($outputClass, $methodName) || true === $input->getOption('debug')) {
-                $output->writeln(print_r($response->getHeaders(), true) . print_r((string) $response->getBody(), true));
+                $output->writeln("Headers:\n" . print_r($response->getHeaders(), true) . "Body:\n" . print_r((string) $response->getBody(), true));
             }
         };
     }
