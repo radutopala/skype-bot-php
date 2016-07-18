@@ -37,7 +37,7 @@ $client = new Client([
     'clientSecret' => '<yourClientSecret>',
 ]);
 $api = $client->authorize()->api('conversation');   // Skype\Api\Conversation
-$api->activity('8:<skypeUsername>', 'Your message');
+$api->activity('29:<skypeHash>', 'Your message');
 ```
 
 ### cli:
