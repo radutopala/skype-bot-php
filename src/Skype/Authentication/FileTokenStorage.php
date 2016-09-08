@@ -34,7 +34,7 @@ class FileTokenStorage implements TokenStorageInterface
      */
     public function read($key = 'access_token')
     {
-        $content = Yaml::parse(file_get_contents($this->file));
+        $content = $this->fileSystem->exists($this->file) ? Yaml::parse(file_get_contents($this->file)) : [];
 
         return isset($content[$key]) ? $content[$key] : null;
     }
