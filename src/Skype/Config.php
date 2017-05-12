@@ -30,6 +30,10 @@ final class Config
     private $_fileTokenStoragePath;
 
     /**
+      * @var Token storage interface
+      */
+     private $_tokenStorageClass;
+    /**
      * Constructor
      *
      * @param  array          $data Array of parameters
