@@ -57,7 +57,12 @@ class Client
     public function __construct(array $config = [], LoggerInterface $logger = null, OutputInterface $output = null, ClientInterface $client = null)
     {
         $this->config = new Config($config);
-        $this->tokenStorage = new FileTokenStorage($this->config->get('fileTokenStoragePath'));
+        try {
+            $class = $this->config->get('tokenStorageClass');
+            $this->tokenStorage = new $class();
+        } catch (SkypeException $exception) {
+            $this->tokenStorage = new FileTokenStorage($this->config->get('fileTokenStoragePath'));
+        }
         $this->logger = $logger;
         $this->output = $output;
 

@@ -68,5 +68,15 @@ php skype.phar conversation:activity <to> <message>
         'fileTokenStoragePath' => '<yourOwnPath>',
    ]);
  ```
+   ```
+
+- You can also write your own TokenStorageInterface::class
+   ```
+  $client = new Client([
+       'clientId' => '<yourClientId>',
+       'clientSecret' => '<yourClientSecret>',
+       'tokenStorageClass' => DatabaseTokenStorage::class
+  ]);
+   ```
 
 More docs to come soon.
