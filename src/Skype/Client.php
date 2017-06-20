@@ -60,7 +60,7 @@ class Client
         try {
             $class = $this->config->get('tokenStorageClass');
             $this->tokenStorage = new $class();
-        } catch (SkypeException $exception) {
+        } catch (\Exception $exception) {
             $this->tokenStorage = new FileTokenStorage($this->config->get('fileTokenStoragePath'));
         }
         $this->logger = $logger;
