@@ -59,7 +59,7 @@ class Client
         $this->config = new Config($config);
         try {
             $class = $this->config->get('tokenStorageClass');
-            $this->tokenStorage = new $class();
+            $this->tokenStorage = (new \ReflectionClass($class))->newInstance();
         } catch (\Exception $exception) {
             $this->tokenStorage = new FileTokenStorage($this->config->get('fileTokenStoragePath'));
         }
