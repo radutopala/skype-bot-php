@@ -57,11 +57,15 @@ class Client
     public function __construct(array $config = [], LoggerInterface $logger = null, OutputInterface $output = null, ClientInterface $client = null)
     {
         $this->config = new Config($config);
-        try {
-            $class = $this->config->get('tokenStorageClass');
-            $this->tokenStorage = (new \ReflectionClass($class))->newInstance();
-        } catch (\Exception $exception) {
-            $this->tokenStorage = new FileTokenStorage($this->config->get('fileTokenStoragePath'));
+        if (is_object($this->config->get('tokenStorageService'))){
+            $this->tokenStorage = $this->config->get('tokenStorageService');
+        } else {
+            try {
+                $class = $this->config->get('tokenStorageClass');
+                $this->tokenStorage = (new \ReflectionClass($class))->newInstance();
+            } catch (\Exception $exception) {
+                $this->tokenStorage = new FileTokenStorage($this->config->get('fileTokenStoragePath'));
+            }
         }
         $this->logger = $logger;
         $this->output = $output;

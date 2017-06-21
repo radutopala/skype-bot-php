@@ -32,7 +32,13 @@ final class Config
     /**
       * @var Token storage interface
       */
-     private $_tokenStorageClass;
+    private $_tokenStorageClass;
+
+    /**
+     * @var Token storage service
+     */
+    private $_tokenStorageService;
+
     /**
      * Constructor
      *
