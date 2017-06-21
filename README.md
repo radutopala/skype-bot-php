@@ -78,5 +78,13 @@ php skype.phar conversation:activity <to> <message>
        'tokenStorageClass' => DatabaseTokenStorage::class
    ]);
    ```
+ - And you can also pass your custom `tokenStorageService`, a service that must implement `TokenStorageInterface`; usable in Symfony scenarios
+  
+    ```
+    $client = new Client([
+        'clientId' => '<yourClientId>',
+        'clientSecret' => '<yourClientSecret>',
+        'tokenStorageService' => $service
+    ]);
+    ```
 
-More docs to come soon.
