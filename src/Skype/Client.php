@@ -99,7 +99,7 @@ class Client
                 'client_id' => $this->config->get('clientId'),
                 'client_secret' => $this->config->get('clientSecret'),
                 'grant_type' => 'client_credentials',
-                'scope' => 'https://graph.microsoft.com/.default'
+                'scope' => 'https://api.botframework.com/.default'
             ]
         ]);
 
